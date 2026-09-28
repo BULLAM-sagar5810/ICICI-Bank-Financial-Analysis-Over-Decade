@@ -1,177 +1,490 @@
-# 🏦 Banking Data Warehouse & Power BI Financial Analytics
+# 🏦 Banking Data Warehouse & Power BI Analytics
 
 ## 📌 Project Overview
 
-The Banking Data Warehouse & Power BI Financial Analytics project is an end-to-end data analytics and business intelligence project developed using Excel/CSV, SQL, SQL Server, Data Warehousing concepts, Data Modeling, Power BI, and DAX. The main objective of this project is to transform a simple flat banking dataset into a structured Data Warehouse and then use the warehouse as the source for an interactive Power BI reporting solution. The project demonstrates the complete journey of data from a raw source file to a structured SQL Server Data Warehouse and finally to business-oriented dashboards in Power BI.
+This project is an end-to-end **Banking Data Warehouse and Business Intelligence solution** developed using **Excel/CSV, SQL Server, SQL, Data Warehousing concepts, Data Modeling, Power BI, and DAX**.
 
-The project started with a banking master flat file containing approximately 40,000 customer records and multiple banking-related attributes. The source file contains information related to customers, accounts, branches, loans, deposits, withdrawals, transfers, transaction activity, customer segments, occupations, locations, and other banking metrics. Since all these business areas were initially available in a flat-file structure, the data was analyzed and organized into separate logical entities to make it more suitable for reporting and analytical purposes.
+The project starts with a flat banking dataset containing **40,000 customer records and 28 attributes** covering customers, accounts, branches, loans, and transaction-related information.
+
+Instead of directly connecting the flat file to Power BI, the source data was first processed and structured using **SQL Server** to build a business-oriented Data Warehouse.
+
+The completed warehouse is then connected to **Power BI** for data modeling, KPI development, interactive reporting, and visualization.
+
+---
 
 ## 🎯 Project Objective
 
-The main objective of this project is to build a structured banking Data Warehouse using SQL Server and use that warehouse to develop an interactive Power BI financial analytics solution. Instead of directly connecting the raw Excel/CSV file to Power BI, the source data was first loaded and processed in SQL Server. The data was then transformed into business-oriented tables with appropriate relationships between customers, accounts, branches, loans, transactions, and dates. After completing the Data Warehouse layer, the SQL Server database was connected to Power BI for data modeling, DAX calculations, KPI creation, and visualization.
+The primary objective of this project is to transform raw banking data into a structured analytical solution that can help analyze:
+
+* Customer behavior
+* Account information
+* Branch performance
+* Banking transactions
+* Deposits and withdrawals
+* Money transfers
+* Failed transactions
+* Loan portfolios
+* Customer segments
+* Time-based banking activity
+
+---
+
+# 🔄 End-to-End Architecture
+
+```text
+                  SOURCE DATA
+                      │
+                      ▼
+             Excel / CSV Flat File
+                      │
+                      ▼
+          Data Understanding & Cleaning
+                      │
+                      ▼
+                  SQL Server
+                      │
+                      ▼
+             Database & Tables
+                      │
+                      ▼
+          Data Warehouse Development
+                      │
+          ┌───────────┴───────────┐
+          ▼                       ▼
+     Dimension Tables          Fact Tables
+          │                       │
+          └───────────┬───────────┘
+                      ▼
+                Data Model
+                      │
+                      ▼
+                  Power BI
+                      │
+                      ▼
+             DAX Measures & KPIs
+                      │
+                      ▼
+          Interactive Dashboards
+```
+
+---
+
+# 📂 Source Dataset
+
+The project uses a banking master flat file containing:
+
+* **40,000 records**
+* **28 attributes**
+
+The source data includes multiple business domains in a single flat structure.
+
+### Customer Attributes
+
+* Customer_ID
+* Customer_Name
+* Gender
+* Age
+* City
+* State
+* Occupation
+* Customer_Segment
+
+### Account Attributes
 
-## 🔄 Data Flow
+* Account_ID
+* Account_Count
+* Account_Type
+* Account_Opening_Date
+* Current_Balance
+
+### Branch Attributes
+
+* Branch_ID
+* Branch_Name
 
-The complete project follows an end-to-end data pipeline. The process begins with the raw Excel/CSV banking file, followed by data understanding, data cleaning, and transformation. The processed data is then stored and structured in SQL Server. Business entities are separated into dimension and fact tables, and relationships are established using primary keys and foreign keys. A date dimension is also included to support time-based analysis. Once the Data Warehouse is completed, the SQL Server database is imported into Power BI, where the data model is prepared and DAX measures are created. Finally, the data is presented through interactive dashboards that provide customer, branch, transaction, and financial analysis.
+### Loan Attributes
 
-The overall architecture of the project can be represented as:
+* Loan_ID
+* Loan_Type
+* Loan_Amount
+* Interest_Rate
+* Loan_Status
 
-Excel / CSV Source Data → SQL Server → Data Transformation → Data Warehouse → Fact & Dimension Tables → Power BI Data Model → DAX Measures → Interactive Financial Dashboards
+### Transaction Attributes
 
-## 🗄️ Data Warehouse Development
+* Transaction_Count
+* Total_Deposit
+* Total_Withdrawal
+* Total_Transfer
+* Failed_Transaction_Count
+* Last_Transaction_Date
+* Preferred_Channel
+* Avg_Transaction_Amount
 
-The Data Warehouse is the core part of this project. The original banking master file contained multiple business processes within one flat structure. To make the data easier to manage and analyze, the data was separated into logical business entities in SQL Server. The warehouse includes customer, account, branch, loan, transaction, and date-related tables. The major tables used in the project include Customers, Accounts, Branches, Loans, Transection, Dim_Date, Fact_Bank_Transaction, and Fact_Bank_Loan.
+---
 
-The Customers table is used to maintain customer-related information such as customer identity, gender, age, location, occupation, and customer segment. The Accounts table contains account-related information such as account type, account opening details, account count, and balance-related information. The Branches table is used to maintain branch information and support branch-level analysis. The Loans table contains information related to loan types, loan amounts, interest rates, and loan status. The Dim_Date table provides a dedicated date structure for performing time-based analysis in Power BI.
+# 🗄️ Data Warehouse
 
-## 📊 Fact Tables
+The original flat file contains multiple business entities in one structure.
 
-The project contains fact tables to represent measurable banking activities. The Fact_Bank_Transaction table is designed to support transaction-related analysis. It contains measurable information such as total deposits, total withdrawals, total transfers, transaction counts, failed transactions, and transaction-related metrics. This table allows the Power BI report to analyze the movement and activity of banking transactions across customers, branches, locations, channels, and time periods.
+To make the data more suitable for analytics, the data was organized into separate business-oriented tables using SQL Server.
 
-The Fact_Bank_Loan table is used to support loan-related analysis. It contains measurable loan information such as loan amounts and other loan-related metrics while connecting the loan activity with relevant dimensions such as customers, branches, loan types, and dates. This structure makes it possible to analyze the bank's loan portfolio from different business perspectives.
+## Main Tables
 
-## 🔑 Data Modeling
+### Dimension / Master Tables
 
-Data modeling was an important part of the project because the source data originally existed as a flat file. The Data Warehouse was structured using fact and dimension concepts so that the data could be efficiently consumed by Power BI. Primary keys and foreign keys were used to establish relationships between the tables. A dedicated date dimension was created to support time-based reporting and trend analysis.
+* `Customers`
+* `Accounts`
+* `Branches`
+* `Loans`
+* `Dim_Date`
 
-The model allows business users to move from high-level financial metrics to detailed analysis based on customers, branches, locations, transaction activity, loan information, and time. This approach also provides a structured foundation for creating DAX measures and interactive Power BI reports.
+### Fact Tables
 
-## 📈 Power BI Development
+* `Fact_Bank_Transaction`
+* `Fact_Bank_Loan`
 
-After completing the SQL Server Data Warehouse, the SQL Server data was connected to Power BI. The Power BI report was designed as an interactive financial analysis solution rather than a single dashboard. The report contains multiple pages, with each page focusing on a different area of banking analysis. Navigation buttons were also created so users can move between the Main Dashboard, Customer Analysis, Branch Analysis, and Transaction Analysis pages.
+### Source / Supporting Table
 
-The Main Dashboard provides an executive-level overview of the banking data. It contains important KPIs such as the total number of customers, total financial amount, total deposits, total withdrawals, total transfers, and failed transactions. The page also acts as the starting point of the report and provides navigation to the other analytical pages.
+* `Transection`
 
-## 👥 Customer Analysis
+The warehouse model is designed to separate descriptive business information from measurable business events.
 
-The Customer Analysis page focuses on understanding customer behavior and customer demographics. The page provides analysis based on occupation, gender, customer segment, location, and transaction activity. It includes a transaction-by-occupation visualization that compares transaction activity across different occupations. A gender-based transaction visualization is used to compare male and female transaction activity, while a deposit-versus-withdrawal analysis provides a comparison of financial activity by gender.
+---
 
-The page also contains customer segment analysis, which allows the distribution of customers across different segments to be examined. Interactive slicers for State, City, and Occupation allow users to filter the report and analyze customer behavior for specific locations or occupations.
+# ⭐ Data Warehouse Model
 
-![Customer Analysis](assets/customer-analysis.png)
+Conceptually, the model follows a fact-and-dimension approach:
 
-## 🏢 Branch Analysis
+```text
+                       Dim_Date
+                          │
+                          │
+Customers ─────── Fact_Bank_Transaction ─────── Accounts
+      │                    │
+      │                    │
+      │                 Branches
+      │
+      │
+Fact_Bank_Loan ───────── Loans
+```
 
-The Branch Analysis page focuses on understanding banking activity across branches and different time periods. The page contains visualizations for deposit activity by day and cash deposit activity by month. It also provides transaction analysis by gender and a breakdown of preferred banking channels such as ATM, Branch, Internet Banking, Mobile App, and UPI.
+The model supports analysis across customers, accounts, branches, transactions, loans, and dates.
 
-Interactive filters are available for Year, Month, and Branch Name. These filters allow users to select a particular year, month, or branch and analyze the corresponding banking activity. This page is designed to provide a branch-level and time-based view of financial activity.
+---
 
-![Branch Analysis](assets/branch-analysis.png)
+# 🧱 Fact Tables
 
-## 💰 Transaction Analysis
+## Fact_Bank_Transaction
 
-The Transaction Analysis page focuses on the overall movement of money through the banking system. The page compares total deposits, withdrawals, and transfers and provides a detailed view of transaction activity across different days and months. A state-level table is also included to compare total deposits, transfers, and withdrawals across different states.
+The transaction fact table is designed to support banking transaction analysis.
 
-The page contains monthly trend analysis that helps users understand how deposits, withdrawals, and transfers change over time. This provides a broader view of financial activity and allows users to identify changes in money movement across different periods.
+Important measures include:
 
-![Transaction Analysis](assets/transaction-analysis.png)
+* Total Deposit
+* Total Withdrawal
+* Total Transfer
+* Transaction Count
+* Failed Transaction Count
+* Average Transaction Amount
 
-## 🏦 Main Dashboard
+### Business Questions
 
-The Main Dashboard acts as the executive overview of the entire Power BI report. It presents the most important financial KPIs in a single view, including approximately 40K customers, total financial amount, deposits, withdrawals, transfers, and failed transactions based on the project dataset. The page also provides navigation buttons that allow users to move to Customer Analysis, Branch Analysis, and Transaction Analysis.
+* What is the total deposit amount?
+* What is the total withdrawal amount?
+* Which branches generate higher transaction activity?
+* How many transactions are being processed?
+* How many transactions fail?
+* How does transaction activity change over time?
 
-![Main Dashboard](assets/main-dashboard.png)
+---
 
-## 📐 DAX and KPI Development
+## Fact_Bank_Loan
 
-DAX was used in Power BI to create analytical measures and calculate important banking KPIs. Measures were created for total deposits, total withdrawals, total transfers, total transactions, failed transactions, and customer counts. These measures are used throughout the report to create KPI cards, charts, tables, and trend analysis.
+The loan fact table supports analysis of the banking loan portfolio.
 
-For example, the Total Deposits measure is calculated using the transaction fact table, while the Total Customers measure uses a distinct customer count. Additional calculated measures can be developed to analyze net money flow, month-over-month changes, year-over-year growth, average transaction values, and other business metrics.
+Important metrics include:
 
-## 💡 Business Analysis
+* Loan Amount
+* Loan Count
+* Interest Rate
+* Loan Status
 
-The completed solution provides a centralized analytical view of banking activity. The report can be used to understand the customer base, analyze customer segments, compare transaction activity across occupations and genders, examine branch performance, analyze deposits and withdrawals, understand transaction channels, evaluate loan activity, and study the movement of money over time.
+### Business Questions
 
-The project demonstrates how raw business data can be converted into meaningful business information by combining SQL Server Data Warehousing with Power BI Business Intelligence capabilities.
+* What is the total loan amount?
+* How many loans are active?
+* Which loan types have higher volumes?
+* How is the loan portfolio distributed across branches?
+* How does loan activity vary across customer segments?
 
-## 🖼️ Power BI Dashboard Screenshots
+---
 
-The Power BI report contains four major analytical views. The Main Dashboard provides the overall financial summary, the Customer Analysis page focuses on customer behavior and demographics, the Branch Analysis page focuses on branch and channel activity, and the Transaction Analysis page provides detailed financial transaction analysis.
+# 📅 Date Dimension
 
-### Main Dashboard
+A dedicated `Dim_Date` table is used for time-based analysis.
 
-![Main Dashboard](assets/main-dashboard.png)
+It supports:
 
-### Customer Analysis
+* Year analysis
+* Month analysis
+* Date filtering
+* Trend analysis
+* Period-based reporting
 
-![Customer Analysis](assets/customer-analysis.png)
+This allows Power BI visuals to perform time-based analysis more effectively.
 
-### Branch Analysis
+---
 
-![Branch Analysis](assets/branch-analysis.png)
+# 📊 Power BI Dashboard
 
-### Transaction Analysis
+After completing the SQL Server Data Warehouse layer, the warehouse was connected to Power BI.
 
-![Transaction Analysis](assets/transaction-analysis.png)
+The Power BI report contains multiple analytical pages.
 
-## 🛠️ Technologies Used
+## 1. Main Page
 
-The project was developed using Excel/CSV as the source data, SQL for data manipulation and transformation, SQL Server and SQL Server Management Studio for database and Data Warehouse development, Data Modeling concepts for creating fact and dimension structures, and Power BI with DAX for business intelligence, KPI development, and visualization.
+Provides an executive-level overview of banking activity.
 
-The major technologies and concepts used in this project include Excel, CSV, SQL, SQL Server, SSMS, Data Warehousing, Data Modeling, Fact Tables, Dimension Tables, Primary Keys, Foreign Keys, Date Dimensions, Power BI, DAX, KPI Development, Interactive Dashboards, and Business Intelligence.
+Potential KPIs include:
 
-## 📁 Project Structure
+* Total Customers
+* Total Accounts
+* Total Deposits
+* Total Withdrawals
+* Total Transfers
+* Total Transactions
+* Total Loan Amount
+* Active Loans
+* Failed Transactions
 
-The recommended project structure is:
+---
 
-Banking-Data-Warehouse-PowerBI/
+## 2. Customer Analysis
 
-├── README.md
+Focuses on customer demographics and customer behavior.
 
-├── Data/
+Analysis includes:
 
-│   └── Banking_Master_Flat_File.csv
+* Customer distribution
+* State-wise customers
+* City-wise customers
+* Occupation analysis
+* Customer segments
+* Age distribution
+* Account type analysis
 
-├── SQL/
+---
 
-│   ├── Database_Creation.sql
+## 3. Branch Analysis
 
-│   ├── Table_Creation.sql
+Focuses on branch-level performance.
 
-│   ├── Data_Transformation.sql
+Analysis includes:
 
-│   ├── Fact_Tables.sql
+* Customers by branch
+* Transactions by branch
+* Deposits by branch
+* Withdrawals by branch
+* Transfers by branch
+* Loan activity by branch
 
-│   ├── Dimension_Tables.sql
+---
 
-│   └── Relationships.sql
+## 4. Transaction Analysis
 
-├── PowerBI/
+Focuses on banking transaction activity.
 
-│   └── ICICI_Bank_Analysis.pbix
+Key metrics include:
 
-├── assets/
+* Total Transactions
+* Total Deposits
+* Total Withdrawals
+* Total Transfers
+* Failed Transactions
+* Average Transaction Amount
 
-│   ├── main-dashboard.png
+---
 
-│   ├── customer-analysis.png
+## 5. Loan Analysis
 
-│   ├── branch-analysis.png
+Focuses on the bank's loan portfolio.
 
-│   └── transaction-analysis.png
+Analysis includes:
 
-└── Documentation/
+* Total Loan Amount
+* Loan Count
+* Loan Type
+* Loan Status
+* Interest Rate
+* Branch-wise loan analysis
+* Customer segment analysis
 
-    └── Data_Warehouse_Model.png
+---
 
-## 🚀 Project Outcome
+## 6. Money Flow in Bank
 
-The final outcome of this project is an end-to-end banking analytics solution that transforms a raw flat banking dataset into a structured SQL Server Data Warehouse and then uses that warehouse as the foundation for an interactive Power BI report. The project demonstrates practical experience in SQL, SQL Server, Data Warehousing, Data Modeling, Power BI, and DAX while showing how data can be transformed from its raw form into meaningful business insights.
+This page focuses on the movement of money through the banking system.
 
-The project follows the complete Business Intelligence workflow of Source Data → SQL Server → Data Warehouse → Data Model → DAX → Power BI → Business Analysis.
+The analysis includes:
 
-## 🔮 Future Enhancements
+```text
+Deposits
+   │
+   ├── Withdrawals
+   │
+   └── Transfers
+```
 
-The project can be further enhanced by implementing advanced DAX calculations, year-over-year and month-over-month analysis, drill-through pages, tooltip pages, customer-level drill-down analysis, branch performance scorecards, Power BI Row-Level Security, incremental refresh, automated ETL processes, scheduled data refresh, and deployment to Power BI Service.
+A calculated net money-flow metric can be used to compare deposits and withdrawals.
+
+---
+
+# 📐 Example DAX Measures
+
+### Total Deposits
+
+```DAX
+Total Deposits =
+SUM(Fact_Bank_Transaction[Total_Deposit])
+```
+
+### Total Withdrawals
+
+```DAX
+Total Withdrawals =
+SUM(Fact_Bank_Transaction[Total_Withdrawal])
+```
+
+### Total Transfers
+
+```DAX
+Total Transfers =
+SUM(Fact_Bank_Transaction[Total_Transfer])
+```
+
+### Total Transactions
+
+```DAX
+Total Transactions =
+SUM(Fact_Bank_Transaction[Transaction_Count])
+```
+
+### Failed Transactions
+
+```DAX
+Failed Transactions =
+SUM(Fact_Bank_Transaction[Failed_Transaction_Count])
+```
+
+### Total Customers
+
+```DAX
+Total Customers =
+DISTINCTCOUNT(Fact_Bank_Transaction[Customer_ID])
+```
+
+### Net Money Flow
+
+```DAX
+Net Money Flow =
+[Total Deposits] - [Total Withdrawals]
+```
+
+---
+
+# 🛠️ Technologies Used
+
+| Technology    | Purpose                              |
+| ------------- | ------------------------------------ |
+| Excel / CSV   | Source data                          |
+| SQL           | Data manipulation and transformation |
+| SQL Server    | Database & Data Warehouse            |
+| SSMS          | SQL development                      |
+| Data Modeling | Fact and dimension design            |
+| Power BI      | Visualization & reporting            |
+| DAX           | KPI and analytical calculations      |
+
+---
+
+# 🔑 Key Concepts Demonstrated
+
+This project demonstrates practical understanding of:
+
+* SQL
+* SQL Server
+* Data Warehousing
+* Fact Tables
+* Dimension Tables
+* Star Schema concepts
+* Primary Keys
+* Foreign Keys
+* Data Transformation
+* Data Modeling
+* Date Dimensions
+* DAX
+* KPI Development
+* Power BI
+* Interactive Dashboard Design
+* Business Intelligence
+
+---
+
+# 📈 Project Outcome
+
+The project converts a raw banking flat file into a structured analytical solution.
+
+```text
+Raw Banking Data
+       ↓
+SQL Server
+       ↓
+Structured Data Warehouse
+       ↓
+Fact + Dimension Model
+       ↓
+Power BI Data Model
+       ↓
+DAX KPIs
+       ↓
+Interactive Banking Analytics
+```
+
+The solution provides a foundation for analyzing customers, accounts, branches, transactions, loans, and money flow through a centralized BI environment.
+
+---
+
+# 🚀 Future Enhancements
+
+The project can be extended with:
+
+* Row-Level Security
+* Incremental Refresh
+* Advanced DAX calculations
+* Year-over-Year analysis
+* Month-over-Month analysis
+* Drill-through pages
+* Tooltip pages
+* Customer-level drill-down
+* Branch performance scorecards
+* Advanced time intelligence
+* Power BI Service deployment
+* Scheduled data refresh
+* SQL Server ETL automation
+
+---
+
+# 👨‍💻 Project Focus
+
+This project was developed to gain practical experience in the complete BI workflow:
+
+**Source Data → SQL Server → Data Warehouse → Data Model → DAX → Power BI → Business Insights**
+
+---
 
 ## 📌 Project Status
 
-The source data analysis and SQL Server Data Warehouse development have been completed. The SQL Server database has been connected to Power BI, and the Power BI data model and visualization layer have been developed with multiple analytical pages. Further enhancements can be made to add more advanced business metrics, time-intelligence calculations, and additional interactive reporting features.
-
-## 👨‍💻 Project Focus
-
-This project was developed to gain practical hands-on experience in the complete data analytics and Business Intelligence lifecycle, starting from raw banking data and progressing through SQL Server Data Warehouse development, data modeling, DAX calculations, and Power BI visualization.
-
-The overall project demonstrates the following workflow:
-
-**Raw Banking Data → SQL Server → Data Warehouse → Fact & Dimension Model → Power BI → DAX → Interactive Financial Analytics**
+**Data Warehouse:** Completed
+**SQL Server Modeling:** Completed
+**Power BI Connection:** Completed
+**Dashboard Visualization:** In Progress
